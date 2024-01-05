@@ -14,13 +14,13 @@ import { AddIcon } from "@chakra-ui/icons";
 const InputExpense = (props) => {
   const [inputDetails, setInputDetails] = React.useState({
     name: "",
-    amount: 0,
+    amount: undefined,
   });
 
   const clearInputs = () => {
     setInputDetails({
       name: "",
-      amount: 0,
+      amount: "",
     });
   };
 
@@ -41,9 +41,7 @@ const InputExpense = (props) => {
         <NumberInputField
           id="expenseAmount"
           placeholder="Amount"
-          onFocus={(e) =>
-            setInputDetails({ ...inputDetails, amount: undefined })
-          }
+          onFocus={(e) => setInputDetails({ ...inputDetails, amount: "" })}
           onChange={(e) => {
             setInputDetails({ ...inputDetails, amount: e.target.value });
           }}
@@ -57,7 +55,7 @@ const InputExpense = (props) => {
         <IconButton
           size="sm"
           onClick={() => {
-            props.addExpense(expenseName.value, expenseAmount.value);
+            props.currentExpenseTable(expenseName.value, expenseAmount.value);
             clearInputs();
           }}
           icon={<AddIcon />}
