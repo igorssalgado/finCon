@@ -25,10 +25,12 @@ const ExpenseTable = (props) => {
   let list =
     props.expenses &&
     props.expenses.map((expense) => {
-      const key =
-        expense.name + "-" + (Math.random() + 1).toString(36).substring(7);
       return (
-        <Tr key={key}>
+        <Tr
+          key={
+            expense.name + "-" + (Math.random() + 1).toString(36).substring(7)
+          }
+        >
           <Td>{expense.name}</Td>
           <Td isNumeric>{BRCurrency.format(expense.amount)}</Td>
           <Td>
