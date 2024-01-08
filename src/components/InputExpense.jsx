@@ -3,9 +3,6 @@ import {
   Input,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   ButtonGroup,
   IconButton,
 } from "@chakra-ui/react";
@@ -17,12 +14,32 @@ const InputExpense = (props) => {
     amount: undefined,
   });
 
+  const [addButtonDisable, setAddButtonDisable] = React.useState(true);
+
   const clearInputs = () => {
     setInputDetails({
       name: "",
       amount: "",
     });
+    setAddButtonDisable(true);
   };
+
+  const handleAddClick = () => {
+    props.currentExpenseTable(expenseName.value, expenseAmount.value);
+    clearInputs();
+  };
+
+  const buttonDisable = () => {
+    if (inputDetails.name.length >= 0 && inputDetails.amount) {
+      setAddButtonDisable(false);
+    } else {
+      setAddButtonDisable(true);
+    }
+  };
+
+  React.useEffect(() => {
+    buttonDisable();
+  }, [inputDetails]);
 
   return (
     <>
@@ -41,25 +58,21 @@ const InputExpense = (props) => {
         <NumberInputField
           id="expenseAmount"
           placeholder="Amount"
-          onFocus={(e) => setInputDetails({ ...inputDetails, amount: "" })}
           onChange={(e) => {
             setInputDetails({ ...inputDetails, amount: e.target.value });
           }}
         />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
       </NumberInput>
-      <ButtonGroup size="sm" isAttached variant="outline">
-        <IconButton
-          size="sm"
-          onClick={() => {
-            props.currentExpenseTable(expenseName.value, expenseAmount.value);
-            clearInputs();
-          }}
-          icon={<AddIcon />}
-        />
+      <ButtonGroup
+        size="sm"
+        isAttached
+        variant="outline"
+        onClick={handleAddClick}
+        isDisabled={addButtonDisable}
+        colorScheme="green"
+        color="green"
+      >
+        <IconButton size="sm" icon={<AddIcon />} />
       </ButtonGroup>
     </>
   );

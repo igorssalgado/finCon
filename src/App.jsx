@@ -10,20 +10,38 @@ function App() {
   const [varExpenses, setVarExpenses] = React.useState([]);
 
   const [capitalAccumulation, setCapitalAccumulation] = React.useState([]);
-
-  const handleCurrentExpenseTable = (name, amount) => {
+  let expensesObject = getFromDataBase();
+  const handleCurrentTable = (name, amount) => {
     if (currentExpenseTable.expenseName === "Fixed Expenses") {
-      setFixedExpenses([...fixedExpenses, { name: name, amount: amount }]);
+      setFixedExpenses([
+        ...fixedExpenses,
+        {
+          name: name,
+          amount: amount,
+        },
+      ]);
     } else if (currentExpenseTable.expenseName === "Varliable Expenses") {
-      setVarExpenses([...varExpenses, { name: name, amount: amount }]);
+      setVarExpenses([
+        ...varExpenses,
+        {
+          name: name,
+          amount: amount,
+        },
+      ]);
     } else {
       setCapitalAccumulation([
         ...capitalAccumulation,
-        { name: name, amount: amount },
+        {
+          name: name,
+          amount: amount,
+        },
       ]);
     }
 
-    addToDataBase(currentExpenseTable, { name: name, amount: amount });
+    addToDataBase(currentExpenseTable, {
+      name: name,
+      amount: amount,
+    });
   };
 
   const [currentExpenseTable, setCurrentExpenseTable] = React.useState({
@@ -46,11 +64,9 @@ function App() {
   };
 
   React.useEffect(() => {
-    let expensesObject = getFromDataBase();
     setFixedExpenses(expensesObject.currentFixedExpenses);
     setVarExpenses(expensesObject.currentVariableExpenses);
     setCapitalAccumulation(expensesObject.currentCapitalAccumulation);
-    // setFixedExpenses();
   }, []);
 
   return (
@@ -91,7 +107,7 @@ function App() {
         </Button>
       </HStack>
       <HStack>
-        <InputExpense currentExpenseTable={handleCurrentExpenseTable} />
+        <InputExpense currentExpenseTable={handleCurrentTable} />
       </HStack>
       <HStack>
         <Box maxW="sm">

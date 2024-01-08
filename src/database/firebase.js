@@ -4,8 +4,8 @@ import {
   ref,
   push,
   onValue,
+  remove,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-import React from "react";
 
 const appSettings = {
   databaseURL: "https://playground-40791-default-rtdb.firebaseio.com/",
@@ -29,18 +29,6 @@ export function addToDataBase(currentExpenseTable, expense) {
     push(capitalAccumulation, expense);
   }
 }
-
-/////
-// precisa pegar as informacoes do Firebase, e exibir dentro dos components
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 export function getFromDataBase() {
   let currentFixedExpenses = [];
@@ -81,4 +69,8 @@ export function getFromDataBase() {
   };
 
   return currentExpensesObject;
+}
+
+export function deleteExpense(db, id) {
+  remove(db);
 }
