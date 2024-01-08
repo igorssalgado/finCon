@@ -1,122 +1,46 @@
 import React from "react";
-import ExpenseTable from "./components/ExpenseTable";
-import { Box, Button, HStack, PinInputField, VStack } from "@chakra-ui/react";
+
+import { HStack, VStack, Grid, GridItem } from "@chakra-ui/react";
+import ExpensesTable from "../src/components/ExpensesTable";
 import InputExpense from "./components/InputExpense";
-import { addToDataBase, getFromDataBase } from "./database/firebase";
+import { BarChart } from "./components/BarChart";
+import { fetchData } from "./database/firebase";
 
 function App() {
   const [fixedExpenses, setFixedExpenses] = React.useState([]);
-
   const [varExpenses, setVarExpenses] = React.useState([]);
-
   const [capitalAccumulation, setCapitalAccumulation] = React.useState([]);
-  let expensesObject = getFromDataBase();
-  const handleCurrentTable = (name, amount) => {
-    if (currentExpenseTable.expenseName === "Fixed Expenses") {
-      setFixedExpenses([
-        ...fixedExpenses,
-        {
-          name: name,
-          amount: amount,
-        },
-      ]);
-    } else if (currentExpenseTable.expenseName === "Varliable Expenses") {
-      setVarExpenses([
-        ...varExpenses,
-        {
-          name: name,
-          amount: amount,
-        },
-      ]);
-    } else {
-      setCapitalAccumulation([
-        ...capitalAccumulation,
-        {
-          name: name,
-          amount: amount,
-        },
-      ]);
-    }
-
-    addToDataBase(currentExpenseTable, {
-      name: name,
-      amount: amount,
-    });
-  };
-
-  const [currentExpenseTable, setCurrentExpenseTable] = React.useState({
-    expenseName: "Fixed Expenses",
-    show: {
-      fixed: true,
-      variable: false,
-      capital: false,
-    },
-  });
-
-  const currentExpenseToShow = () => {
-    if (currentExpenseTable.show.fixed) {
-      return fixedExpenses;
-    } else if (currentExpenseTable.show.variable) {
-      return varExpenses;
-    } else if (currentExpenseTable.show.capital) {
-      return capitalAccumulation;
-    }
-  };
 
   React.useEffect(() => {
-    setFixedExpenses(expensesObject.currentFixedExpenses);
-    setVarExpenses(expensesObject.currentVariableExpenses);
-    setCapitalAccumulation(expensesObject.currentCapitalAccumulation);
+    fetchData();
   }, []);
 
   return (
     <>
-      <HStack>
-        <Button
-          onClick={() =>
-            setCurrentExpenseTable({
-              ...currentExpenseTable,
-              expenseName: "Fixed Expenses",
-              show: { fixed: true, variable: false, capital: false },
-            })
-          }
-        >
-          Fixed
-        </Button>
-        <Button
-          onClick={() =>
-            setCurrentExpenseTable({
-              ...currentExpenseTable,
-              expenseName: "Varliable Expenses",
-              show: { fixed: false, variable: true, capital: false },
-            })
-          }
-        >
-          Variable
-        </Button>
-        <Button
-          onClick={() =>
-            setCurrentExpenseTable({
-              ...currentExpenseTable,
-              expenseName: "Capital",
-              show: { fixed: false, variable: false, capital: true },
-            })
-          }
-        >
-          Capital
-        </Button>
-      </HStack>
-      <HStack>
-        <InputExpense currentExpenseTable={handleCurrentTable} />
-      </HStack>
-      <HStack>
-        <Box maxW="sm">
-          <ExpenseTable
-            name={currentExpenseTable.expenseName}
-            expenses={currentExpenseToShow()}
-          />
-        </Box>
-      </HStack>
+      <Grid
+        templateAreas={`"header header"
+                  "chart main"`}
+        gridTemplateRows={"50px 30px 30px"}
+        gridTemplateColumns={"1fr 12fr"}
+        h="200px"
+        gap="1"
+      >
+        <GridItem padding="2" area={"header"}>
+          <HStack>
+            <InputExpense />
+          </HStack>
+        </GridItem>
+        <GridItem area={"chart"} width={500}>
+          <BarChart />
+        </GridItem>
+        <GridItem pl="2" area={"main"}>
+          <HStack>
+            <ExpensesTable name="Fixed Expenses" />
+            <ExpensesTable name="Variable Expenses" />
+            <ExpensesTable name="Capital Accumulation" />
+          </HStack>
+        </GridItem>
+      </Grid>
     </>
   );
 }

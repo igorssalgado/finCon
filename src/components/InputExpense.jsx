@@ -8,39 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
-const InputExpense = (props) => {
-  const [inputDetails, setInputDetails] = React.useState({
-    name: "",
-    amount: undefined,
-  });
-
-  const [addButtonDisable, setAddButtonDisable] = React.useState(true);
-
-  const clearInputs = () => {
-    setInputDetails({
-      name: "",
-      amount: "",
-    });
-    setAddButtonDisable(true);
-  };
-
-  const handleAddClick = () => {
-    props.currentExpenseTable(expenseName.value, expenseAmount.value);
-    clearInputs();
-  };
-
-  const buttonDisable = () => {
-    if (inputDetails.name.length >= 0 && inputDetails.amount) {
-      setAddButtonDisable(false);
-    } else {
-      setAddButtonDisable(true);
-    }
-  };
-
-  React.useEffect(() => {
-    buttonDisable();
-  }, [inputDetails]);
-
+const InputExpense = () => {
   return (
     <>
       <Input
@@ -49,26 +17,14 @@ const InputExpense = (props) => {
         id="expenseName"
         inputMode="text"
         placeholder="Name"
-        value={inputDetails.name}
-        onChange={(e) => {
-          setInputDetails({ ...inputDetails, name: e.target.value });
-        }}
       />
-      <NumberInput size="md" maxW={110} min={0} value={inputDetails.amount}>
-        <NumberInputField
-          id="expenseAmount"
-          placeholder="Amount"
-          onChange={(e) => {
-            setInputDetails({ ...inputDetails, amount: e.target.value });
-          }}
-        />
+      <NumberInput size="md" maxW={110} min={0}>
+        <NumberInputField id="expenseAmount" placeholder="Amount" />
       </NumberInput>
       <ButtonGroup
         size="sm"
         isAttached
         variant="outline"
-        onClick={handleAddClick}
-        isDisabled={addButtonDisable}
         colorScheme="green"
         color="green"
       >
