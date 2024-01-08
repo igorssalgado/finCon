@@ -8,27 +8,41 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Button,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const ExpenseTable = (props) => {
-  let list =
-    props.expenses &&
-    props.expenses.map((expense) => {
-      return (
-        <Tr key={Math.random()}>
-          <Td>{expense.name}</Td>
-          <Td>{expense.amount}</Td>
-        </Tr>
-      );
-    });
+  let BRCurrency = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   const genExpensesListTable = () => {
     return list;
   };
 
+  let list =
+    props.expenses &&
+    props.expenses.map((expense) => {
+      const key =
+        expense.name + "-" + (Math.random() + 1).toString(36).substring(7);
+      return (
+        <Tr key={key}>
+          <Td>{expense.name}</Td>
+          <Td isNumeric>{BRCurrency.format(expense.amount)}</Td>
+          <Td>
+            <Button background={false} onClick={(e) => console.log("delete")}>
+              <DeleteIcon boxSize={3} />
+            </Button>
+          </Td>
+        </Tr>
+      );
+    });
+
   return (
     <TableContainer>
-      <Table variant="simple">
+      <Table variant="striped" size="sm">
         <TableCaption>{props.name}</TableCaption>
         <Thead>
           <Tr>
