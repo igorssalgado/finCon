@@ -11,23 +11,68 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
+import { FormatCurrency } from "../utils/FormatCurrency";
+
 const ExpensesTable = (props) => {
+  const [tableItem, setTableItem] = React.useState();
+
+  function createTdComponent(name, amount) {
+    return (
+      <Tbody>
+        <Tr key={Math.random()}>
+          <Td>{name}</Td>
+          <Td>{FormatCurrency(amount)}</Td>
+        </Tr>
+      </Tbody>
+    );
+  }
+
+  let currentExpense = props.currentExpense.expensesFromDB;
+
+  React.useEffect(() => {
+    switch (props.currentExpense.expenseName) {
+      case "fixedExpenses":
+        setTableItem(
+          JSON.parse(currentExpense).fixedExpenses.map((item) => {
+            return createTdComponent(item.name, item.amount);
+          })
+        );
+
+        break;
+      case "varExpenses":
+        setTableItem(
+          JSON.parse(currentExpense).varExpenses.map((item) => {
+            return createTdComponent(item.name, item.amount);
+          })
+        );
+        break;
+      case "capitalAccumulation":
+        setTableItem(
+          JSON.parse(currentExpense).capitalAccumulation.map((item) => {
+            return createTdComponent(item.name, item.amount);
+          })
+        );
+        break;
+
+      default:
+        console.log("default");
+        break;
+    }
+  }, [props.currentExpense.expenseName]);
+
   return (
     <TableContainer>
       <Table variant="striped" size="sm">
-        <TableCaption placement="top">{props.name}</TableCaption>
+        <TableCaption placement="top">
+          {props.currentExpense.expenseName}
+        </TableCaption>
         <Thead>
-          <Tr>
+          <Tr key={Math.random()}>
             <Th>expense name</Th>
             <Th>amount</Th>
           </Tr>
         </Thead>
-        <Tbody>
-          <Tr>
-            <Td>coisa</Td>
-            <Td>amount</Td>
-          </Tr>
-        </Tbody>
+        {tableItem}
       </Table>
     </TableContainer>
   );
