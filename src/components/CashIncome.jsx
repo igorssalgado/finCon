@@ -6,13 +6,18 @@ import {
   SliderMark,
   Box,
   Text,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
 } from "@chakra-ui/react";
 import React from "react";
 
 import { FormatCurrency } from "../utils/FormatCurrency";
+import { CheckIcon } from "@chakra-ui/icons";
 
-const CashIncome = () => {
-  const [sliderValue, setSliderValue] = React.useState(2000);
+const CashIncome = (props) => {
+  const [sliderValue, setSliderValue] = React.useState(5300);
 
   const [mouseOver, setMouseOver] = React.useState(false);
 
@@ -22,6 +27,10 @@ const CashIncome = () => {
     fontSize: "sm",
   };
 
+  React.useEffect(() => {
+    props.updateIncome(sliderValue);
+  }, [sliderValue]);
+
   return (
     <Box
       pt={6}
@@ -29,12 +38,37 @@ const CashIncome = () => {
       onMouseOver={() => setMouseOver(true)}
       onMouseLeave={() => setMouseOver(false)}
     >
-      <Text>Income: {FormatCurrency(sliderValue)}</Text>
+      {/* <Text>Income: {FormatCurrency(sliderValue)}</Text> */}
+      {/* <Input
+        type="currency"
+        onChange={(e) => setSliderValue(e.target.value)}
+        value={FormatCurrency(sliderValue)}
+      /> */}
+
+      <InputGroup>
+        <InputLeftElement
+          pointerEvents="none"
+          color="gray.300"
+          fontSize="1.2em"
+        >
+          $
+        </InputLeftElement>
+        <Input
+          type="number"
+          placeholder="Enter amount"
+          value={sliderValue}
+          onChange={(e) => setSliderValue(e.target.value)}
+        />
+        <InputRightElement>
+          <CheckIcon color="green.500" />
+        </InputRightElement>
+      </InputGroup>
+
       {mouseOver && (
         <Box>
           <Slider
             aria-label="slider-ex-6"
-            defaultValue={2000}
+            defaultValue={sliderValue}
             onChange={(val) => setSliderValue(val)}
             max={9000}
           >

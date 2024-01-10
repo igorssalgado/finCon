@@ -26,6 +26,8 @@ function App() {
     expensesFromDB: getData(),
   });
 
+  const [income, setIncome] = React.useState(0);
+
   function getAmountTotals() {
     let total = [0, 0, 0];
     let db = currentExpense.expensesFromDB;
@@ -45,23 +47,27 @@ function App() {
     return total;
   }
 
+  function updateIncome(value) {
+    setIncome(value);
+  }
+
   return (
     <>
       <Grid
         templateAreas={`"header header2"
                   "nav main"
                   "nav main"`}
-        gridTemplateRows={"120px 1fr 500px"}
+        gridTemplateRows={"150px 1fr 500px"}
         gridTemplateColumns={"400px 1fr"}
         gap="1"
         color="whiteAlpha.800"
         fontWeight="bold"
       >
         <GridItem padding={3} area={"header"} bg="red.900">
-          <ExpensesTotal totalsArray={getAmountTotals()} />
+          <ExpensesTotal totalsArray={getAmountTotals()} income={income} />
         </GridItem>
         <GridItem padding={5} area={"header2"} bg="orange.900">
-          <CashIncome />
+          <CashIncome updateIncome={updateIncome} />
         </GridItem>
         <GridItem pl="2" area={"nav"} bg="green.900">
           <InputExpense currentExpense={currentExpense} />

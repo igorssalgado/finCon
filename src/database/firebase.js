@@ -31,26 +31,26 @@ export function getData() {
   // nao consigo pegar os dados do firebase quando inicia o programa, so pega pelo onValue, quando os valores no DB mudam.
 
   const obj = {
-    capitalAccumulation: [
-      { name: "c1", amount: 10 },
-      { name: "c2", amount: 10 },
-      { name: "c3", amount: 10 },
-      { name: "c4", amount: 10 },
-      { name: "c5", amount: 11 },
-    ],
     fixedExpenses: [
-      { name: "f1", amount: 10 },
-      { name: "f2", amount: 10 },
-      { name: "f3", amount: 10 },
-      { name: "f4", amount: 10 },
-      { name: "f5", amount: 12 },
+      { name: "f1", amount: 0 },
+      { name: "f2", amount: 0 },
+      { name: "f3", amount: 0 },
+      { name: "f4", amount: 0 },
+      { name: "f5", amount: 2650 },
     ],
     varExpenses: [
-      { name: "v1", amount: 10 },
-      { name: "v2", amount: 10 },
-      { name: "v3", amount: 10 },
-      { name: "v4", amount: 10 },
-      { name: "v5", amount: 13 },
+      { name: "v1", amount: 0 },
+      { name: "v2", amount: 0 },
+      { name: "v3", amount: 0 },
+      { name: "v4", amount: 0 },
+      { name: "v5", amount: 1590 },
+    ],
+    capitalAccumulation: [
+      { name: "c1", amount: 0 },
+      { name: "c2", amount: 0 },
+      { name: "c3", amount: 0 },
+      { name: "c4", amount: 0 },
+      { name: "c5", amount: 1060 },
     ],
   };
 

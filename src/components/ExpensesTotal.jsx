@@ -7,10 +7,12 @@ import {
   StatArrow,
   HStack,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
 
 import { FormatCurrency } from "../utils/FormatCurrency";
+import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 
 const ExpensesTotal = (props) => {
   function totalExpenses() {
@@ -20,29 +22,29 @@ const ExpensesTotal = (props) => {
     return sum;
   }
 
-  function fixedExpenses() {
-    return props.totalsArray[0];
+  console.log(props.income - totalExpenses());
+
+  function expensePercent(total, income) {
+    return (total / income) * 100;
   }
 
   return (
     <>
       <StatGroup>
+        <Text color={props.income - totalExpenses() < 0 ? "red" : "green"}>
+          Cash Flow: {FormatCurrency(props.income - totalExpenses())}
+        </Text>
         <HStack>
-          <Stat>
-            <StatLabel>Capital Accumulation</StatLabel>
-            <StatNumber>{FormatCurrency(props.totalsArray[0])}</StatNumber>
-            <StatHelpText>
-              <StatArrow type="increase" />
-              23.36%
-            </StatHelpText>
-          </Stat>
-
           <Stat>
             <StatLabel>Fixed Expenses</StatLabel>
             <StatNumber>{FormatCurrency(props.totalsArray[1])}</StatNumber>
             <StatHelpText>
-              <StatArrow type="decrease" />
-              9.05%
+              {expensePercent(props.totalsArray[1], props.income) > 50 ? (
+                <WarningIcon color={"red"} />
+              ) : (
+                <CheckCircleIcon color={"green"} />
+              )}
+              {Math.floor(expensePercent(props.totalsArray[1], props.income))}%
             </StatHelpText>
           </Stat>
 
@@ -50,8 +52,25 @@ const ExpensesTotal = (props) => {
             <StatLabel>Variable Expenses</StatLabel>
             <StatNumber>{FormatCurrency(props.totalsArray[2])}</StatNumber>
             <StatHelpText>
-              <StatArrow type="decrease" />
-              9.05%
+              {expensePercent(props.totalsArray[2], props.income) > 30 ? (
+                <WarningIcon color={"red"} />
+              ) : (
+                <CheckCircleIcon color={"green"} />
+              )}
+              {Math.floor(expensePercent(props.totalsArray[2], props.income))}%
+            </StatHelpText>
+          </Stat>
+
+          <Stat>
+            <StatLabel>Capital Accumulation</StatLabel>
+            <StatNumber>{FormatCurrency(props.totalsArray[0])}</StatNumber>
+            <StatHelpText>
+              {expensePercent(props.totalsArray[0], props.income) < 20 ? (
+                <WarningIcon color={"red"} />
+              ) : (
+                <CheckCircleIcon color={"green"} />
+              )}
+              {Math.floor(expensePercent(props.totalsArray[0], props.income))}%
             </StatHelpText>
           </Stat>
         </HStack>
