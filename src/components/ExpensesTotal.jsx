@@ -22,8 +22,6 @@ const ExpensesTotal = (props) => {
     return sum;
   }
 
-  console.log(props.income - totalExpenses());
-
   function expensePercent(total, income) {
     return (total / income) * 100;
   }
@@ -31,8 +29,11 @@ const ExpensesTotal = (props) => {
   return (
     <>
       <StatGroup>
-        <Text color={props.income - totalExpenses() < 0 ? "red" : "green"}>
-          Cash Flow: {FormatCurrency(props.income - totalExpenses())}
+        <Text style={{ display: "flex" }} gap={1}>
+          Cash Flow:
+          <Text color={props.income - totalExpenses() < 0 ? "red" : "green"}>
+            {FormatCurrency(props.income - totalExpenses())}
+          </Text>
         </Text>
         <HStack>
           <Stat>
