@@ -56,7 +56,7 @@ export function getData() {
 
   // // {"capitalAccumulation":{"-NnifhL_5l6AO0V5a-E4":{"amount":0,"expenseName":"c1"}},"fixedExpenses":{"-NniffK-Y-Rwvt8ZghmL":{"amount":0,"expenseName":"f1"},"-Nnihl-tdFz2E-LqScjT":{"amount":0,"expenseName":"a"},"-Nnii7Q7I8fEw9PC5OM9":{"amount":0,"expenseName":"outro"}},"varExpenses":{"-NnifmMxCPAVnUqEk3My":{"amount":0,"expenseName":"v1"}}}
 
-  // return JSON.stringify(obj);
+  return JSON.stringify(obj);
 }
 
 export function addExpense(table, item) {

@@ -44,7 +44,7 @@ const CashIncome = (props) => {
         onChange={(e) => setSliderValue(e.target.value)}
         value={FormatCurrency(sliderValue)}
       /> */}
-
+      Salary:
       <InputGroup>
         <InputLeftElement
           pointerEvents="none"
@@ -63,7 +63,6 @@ const CashIncome = (props) => {
           <CheckIcon color="green.500" />
         </InputRightElement>
       </InputGroup>
-
       {mouseOver && (
         <Box>
           <Slider

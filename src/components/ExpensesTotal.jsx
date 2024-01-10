@@ -29,11 +29,9 @@ const ExpensesTotal = (props) => {
   return (
     <>
       <StatGroup>
-        <Text style={{ display: "flex" }} gap={1}>
-          Cash Flow:
-          <Text color={props.income - totalExpenses() < 0 ? "red" : "green"}>
-            {FormatCurrency(props.income - totalExpenses())}
-          </Text>
+        Cash Flow:
+        <Text color={props.income - totalExpenses() < 0 ? "red" : "green"}>
+          {FormatCurrency(props.income - totalExpenses())}
         </Text>
         <HStack>
           <Stat>
