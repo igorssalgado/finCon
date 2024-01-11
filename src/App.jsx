@@ -40,7 +40,7 @@ function App() {
       total[1] += item.amount;
     });
 
-    JSON.parse(db).varExpenses.map((item) => {
+    JSON.parse(db).variableExpenses.map((item) => {
       total[2] += item.amount;
     });
 
@@ -87,7 +87,7 @@ function App() {
             onClick={() =>
               setCurrentExpense({
                 ...currentExpense,
-                expenseName: "varExpenses",
+                expenseName: "variableExpenses",
               })
             }
           >

@@ -38,7 +38,7 @@ export function getData() {
       { name: "f4", amount: 0 },
       { name: "f5", amount: 2650 },
     ],
-    varExpenses: [
+    variableExpenses: [
       { name: "v1", amount: 0 },
       { name: "v2", amount: 0 },
       { name: "v3", amount: 0 },

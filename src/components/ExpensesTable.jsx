@@ -39,9 +39,9 @@ const ExpensesTable = (props) => {
         );
 
         break;
-      case "varExpenses":
+      case "variableExpenses":
         setTableItem(
-          JSON.parse(currentExpense).varExpenses.map((item) => {
+          JSON.parse(currentExpense).variableExpenses.map((item) => {
             return createTdComponent(item.name, item.amount);
           })
         );
