@@ -4,9 +4,7 @@ import {
   StatNumber,
   StatHelpText,
   StatGroup,
-  StatArrow,
   HStack,
-  VStack,
   Text,
 } from "@chakra-ui/react";
 import React from "react";
@@ -20,22 +18,18 @@ const ExpensesTotal = (props) => {
   let sumCapital = 0;
   let income = props.income;
 
-  props.allExpenses.map((expense) => {
-    expense.fixedExpenses.map((item) => {
-      sumFixed += item.amount;
-    });
+  // console.log(props.allExpenses);
+
+  props.allExpenses[0].map((item) => {
+    sumFixed += item.amount;
   });
 
-  props.allExpenses.map((expense) => {
-    expense.variableExpenses.map((item) => {
-      sumVariable += item.amount;
-    });
+  props.allExpenses[1].map((item) => {
+    sumVariable += item.amount;
   });
 
-  props.allExpenses.map((expense) => {
-    expense.capitalAccumulation.map((item) => {
-      sumCapital += item.amount;
-    });
+  props.allExpenses[2].map((item) => {
+    sumCapital += item.amount;
   });
 
   function expensePercent(total, income) {

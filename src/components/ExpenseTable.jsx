@@ -14,6 +14,8 @@ import {
 const ExpenseTable = (props) => {
   const [list, setList] = React.useState();
 
+  // console.log(props.expense);
+
   React.useEffect(() => {
     props.expense &&
       setList(

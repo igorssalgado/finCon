@@ -2,7 +2,7 @@ import React from "react";
 
 import { Grid, GridItem, Button } from "@chakra-ui/react";
 
-import { fetchPost } from "./database/database";
+import { fetchPost, addThing } from "./database/database";
 
 import InputExpense from "./components/InputExpense";
 import ExpensesTotal from "./components/ExpensesTotal";
@@ -10,21 +10,19 @@ import CashIncome from "./components/CashIncome";
 import ExpenseTable from "./components/ExpenseTable";
 
 function App() {
-  const [currentExpense, setCurrentExpense] = React.useState();
-
-  const [allExpenses, setAllExpenses] = React.useState();
-
   const [income, setIncome] = React.useState(0);
+  const [allExpenses, setAllExpenses] = React.useState();
+  const [currentExpense, setCurrentExpense] = React.useState();
+  const [currentExpenseName, setCurrentExpenseName] = React.useState();
 
   React.useEffect(() => {
     getData();
-  }, []);
+  }, [currentExpense]);
 
   //inicializa allExpenses e a primeira currentExpense como as fixed do database
   async function getData() {
     const data = await fetchPost();
     setAllExpenses(data);
-    setCurrentExpense(data[0].fixedExpenses);
   }
 
   function updateIncome(value) {
@@ -33,7 +31,10 @@ function App() {
 
   function addExpense(item) {
     setCurrentExpense([...currentExpense, item]);
+    addThing(item, currentExpenseName);
   }
+
+  // console.log(currentExpense);
 
   return (
     <>
@@ -61,20 +62,25 @@ function App() {
         <GridItem pl="2" area={"main"} bg="blue.900">
           <Button
             onClick={() => {
-              setCurrentExpense(allExpenses[0].fixedExpenses);
+              setCurrentExpense(allExpenses[0]);
+              setCurrentExpenseName("fixedExpenses");
             }}
           >
             Fixed Expenses
           </Button>
           <Button
-            onClick={() => setCurrentExpense(allExpenses[0].variableExpenses)}
+            onClick={() => {
+              setCurrentExpense(allExpenses[1]);
+              setCurrentExpenseName("variableExpenses");
+            }}
           >
             Variable Expenses
           </Button>
           <Button
-            onClick={() =>
-              setCurrentExpense(allExpenses[0].capitalAccumulation)
-            }
+            onClick={() => {
+              setCurrentExpense(allExpenses[2]);
+              setCurrentExpenseName("capitalAccumulation");
+            }}
           >
             Capital Accumulation
           </Button>
