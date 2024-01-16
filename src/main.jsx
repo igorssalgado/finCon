@@ -5,9 +5,9 @@ import App from "./App.jsx";
 
 const rootElement = document.getElementById("root");
 ReactDOM.createRoot(rootElement).render(
-  <React.StrictMode>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ChakraProvider>
+    <App />
+  </ChakraProvider>
+  // </React.StrictMode>
 );

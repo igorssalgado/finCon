@@ -12,9 +12,9 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import React from "react";
+import { CheckIcon } from "@chakra-ui/icons";
 
 import { FormatCurrency } from "../utils/FormatCurrency";
-import { CheckIcon } from "@chakra-ui/icons";
 
 const CashIncome = (props) => {
   const [sliderValue, setSliderValue] = React.useState(5300);

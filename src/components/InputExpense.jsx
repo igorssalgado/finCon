@@ -1,52 +1,76 @@
 import React from "react";
 import {
+  Button,
+  FormControl,
+  FormLabel,
   Input,
-  NumberInput,
-  NumberInputField,
-  ButtonGroup,
-  IconButton,
-  HStack,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-
-import { addExpense } from "../database/firebase";
+import { Field, Form, Formik } from "formik";
 
 const InputExpense = (props) => {
-  function handleAddButtonClick() {
-    console.log(props.currentExpense);
-    // addExpense(props.currentExpense.expenseName, {
-    //   expenseName: expenseName.value,
-    //   amount: 0,
-    // });
+  function validateName(value) {
+    let error;
+
+    if (!value) {
+      error = "Name is required";
+    }
+    return error;
+  }
+
+  function validateAmount(value) {
+    let error;
+
+    if (!value) {
+      error = "Amount is required";
+    }
+    return error;
   }
 
   return (
-    <>
-      <Input
-        width="sm"
-        id="expenseName"
-        inputMode="text"
-        placeholder="Name"
-        maxW={"97%"}
-        margin={1}
-      />
-      <HStack justifyContent="space-between">
-        <NumberInput size="md" maxW={"40%"} min={0} margin={1}>
-          <NumberInputField id="expenseAmount" placeholder="Amount" />
-        </NumberInput>
-        <ButtonGroup
-          size="sm"
-          isAttached
-          variant="outline"
-          colorScheme="green"
-          color="green"
-          margin={1}
-          onClick={() => handleAddButtonClick()}
-        >
-          <IconButton size="sm" icon={<AddIcon />} />
-        </ButtonGroup>
-      </HStack>
-    </>
+    <Formik
+      initialValues={{ expenseName: "coisa", amount: 2 }}
+      onSubmit={(values, actions) => {
+        props.addExpense(values);
+        setTimeout(() => {
+          actions.setSubmitting(false);
+        }, 250);
+      }}
+    >
+      {(props) => (
+        <Form>
+          <Field name="expenseName" validate={validateName}>
+            {({ field, form }) => (
+              <FormControl
+                isInvalid={form.errors.expenseName && form.touched.expenseName}
+              >
+                <Input {...field} placeholder="Expense name" />
+                <FormErrorMessage>{form.errors.expenseName}</FormErrorMessage>
+              </FormControl>
+            )}
+          </Field>
+          <Field name="amount" validate={validateAmount}>
+            {({ field, form }) => (
+              <FormControl
+                isInvalid={form.errors.amount && form.touched.amount}
+              >
+                <Input {...field} type="number" placeholder="Amount" />
+                <FormErrorMessage>{form.errors.amount}</FormErrorMessage>
+              </FormControl>
+            )}
+          </Field>
+          <Button
+            mt={4}
+            colorScheme="teal"
+            isLoading={props.isSubmitting}
+            type="submit"
+          >
+            <AddIcon />
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
