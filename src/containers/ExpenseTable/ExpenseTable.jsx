@@ -10,14 +10,17 @@ import {
   Td,
   Text,
 } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
-const ExpenseTable = (props) => {
+const ExpenseTable = () => {
   const [list, setList] = React.useState();
 
+  const expense = useSelector((store) => store.CURRENTEXPENSE.currentExpense);
+
   React.useEffect(() => {
-    props.expense &&
+    expense &&
       setList(
-        props.expense.map((item) => {
+        expense.map((item) => {
           return (
             <Tr key={Math.random() * 5}>
               <Td>{item.expenseName}</Td>
@@ -26,11 +29,11 @@ const ExpenseTable = (props) => {
           );
         })
       );
-  }, [props.expense]);
+  }, [expense]);
 
   return (
     <>
-      {props.expense ? (
+      {expense ? (
         <TableContainer>
           <Table size="sm" alignContent={"center"}>
             <Thead>

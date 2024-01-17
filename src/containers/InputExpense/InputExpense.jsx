@@ -1,11 +1,17 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import { Button, FormControl, Input, FormErrorMessage } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { Field, Form, Formik } from "formik";
 
 const InputExpense = (props) => {
+  const currentExpenseName = useSelector(
+    (store) => store.CURRENTEXPENSENAME.currentExpenseName
+  );
+
   function placeHolder() {
-    let name = props.currentExpenseName.split(/(?=[A-Z])/);
+    let name = currentExpenseName.split(/(?=[A-Z])/);
 
     return (
       "Add " +
