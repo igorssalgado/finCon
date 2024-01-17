@@ -2,7 +2,7 @@ import React from "react";
 
 import { Grid, GridItem, Button } from "@chakra-ui/react";
 
-import { fetchPost, addThing } from "./database/database";
+import { fetchPost, addItem } from "./database/database";
 
 import InputExpense from "./components/InputExpense";
 import ExpensesTotal from "./components/ExpensesTotal";
@@ -14,6 +14,11 @@ function App() {
   const [allExpenses, setAllExpenses] = React.useState();
   const [currentExpense, setCurrentExpense] = React.useState();
   const [currentExpenseName, setCurrentExpenseName] = React.useState();
+  const [buttonsColor, setButtonsColors] = React.useState({
+    fixed: "",
+    var: "",
+    cap: "",
+  });
 
   React.useEffect(() => {
     getData();
@@ -31,10 +36,8 @@ function App() {
 
   function addExpense(item) {
     setCurrentExpense([...currentExpense, item]);
-    addThing(item, currentExpenseName);
+    addItem(item, currentExpenseName);
   }
-
-  // console.log(currentExpense);
 
   return (
     <>
@@ -57,34 +60,45 @@ function App() {
           <CashIncome updateIncome={updateIncome} />
         </GridItem>
         <GridItem pl="2" area={"nav"} bg="green.900">
-          <InputExpense addExpense={addExpense} />
+          {currentExpense && (
+            <InputExpense
+              addExpense={addExpense}
+              currentExpenseName={currentExpenseName}
+            />
+          )}
         </GridItem>
         <GridItem pl="2" area={"main"} bg="blue.900">
           <Button
+            bgColor={buttonsColor.fixed}
             onClick={() => {
               setCurrentExpense(allExpenses[0]);
               setCurrentExpenseName("fixedExpenses");
+              setButtonsColors({ fixed: "green.300", var: "", cap: "" });
             }}
           >
             Fixed Expenses
           </Button>
           <Button
+            onMouseOver={false}
+            bgColor={buttonsColor.var}
             onClick={() => {
               setCurrentExpense(allExpenses[1]);
               setCurrentExpenseName("variableExpenses");
+              setButtonsColors({ fixed: "", var: "green.300", cap: "" });
             }}
           >
             Variable Expenses
           </Button>
           <Button
+            bgColor={buttonsColor.cap}
             onClick={() => {
               setCurrentExpense(allExpenses[2]);
               setCurrentExpenseName("capitalAccumulation");
+              setButtonsColors({ fixed: "", var: "", cap: "green.300" });
             }}
           >
             Capital Accumulation
           </Button>
-
           {allExpenses && <ExpenseTable expense={currentExpense} />}
         </GridItem>
       </Grid>
