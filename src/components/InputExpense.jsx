@@ -1,15 +1,21 @@
 import React from "react";
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-} from "@chakra-ui/react";
+import { Button, FormControl, Input, FormErrorMessage } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { Field, Form, Formik } from "formik";
 
 const InputExpense = (props) => {
+  function placeHolder() {
+    let name = props.currentExpenseName.split(/(?=[A-Z])/);
+
+    return (
+      "Add " +
+      name[0].charAt(0).toUpperCase() +
+      name[0].slice(1) +
+      " " +
+      name[1]
+    );
+  }
+
   function validateName(value) {
     let error;
 
@@ -30,7 +36,7 @@ const InputExpense = (props) => {
 
   return (
     <Formik
-      initialValues={{ expenseName: "OUTRACOISA", amount: 2 }}
+      // initialValues={{ expenseName: "OUTRACOISA", amount: 2 }}
       onSubmit={(values, actions) => {
         props.addExpense(values);
         setTimeout(() => {
@@ -45,7 +51,7 @@ const InputExpense = (props) => {
               <FormControl
                 isInvalid={form.errors.expenseName && form.touched.expenseName}
               >
-                <Input {...field} placeholder="Expense name" />
+                <Input {...field} placeholder={placeHolder()} />
                 <FormErrorMessage>{form.errors.expenseName}</FormErrorMessage>
               </FormControl>
             )}

@@ -18,8 +18,6 @@ const ExpensesTotal = (props) => {
   let sumCapital = 0;
   let income = props.income;
 
-  // console.log(props.allExpenses);
-
   props.allExpenses[0].map((item) => {
     sumFixed += item.amount;
   });
@@ -82,12 +80,6 @@ const ExpensesTotal = (props) => {
           </Stat>
         </HStack>
       </StatGroup>
-      {/*     
-        <Stat>
-          <StatLabel>Total expenses</StatLabel>
-          <StatNumber>{FormatCurrency(totalExpenses())}</StatNumber>
-          <StatHelpText>Feb 12 - Feb 28</StatHelpText>
-        </Stat> */}
     </>
   );
 };

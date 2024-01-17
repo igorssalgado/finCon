@@ -38,12 +38,6 @@ const CashIncome = (props) => {
       onMouseOver={() => setMouseOver(true)}
       onMouseLeave={() => setMouseOver(false)}
     >
-      {/* <Text>Income: {FormatCurrency(sliderValue)}</Text> */}
-      {/* <Input
-        type="currency"
-        onChange={(e) => setSliderValue(e.target.value)}
-        value={FormatCurrency(sliderValue)}
-      /> */}
       Salary:
       <InputGroup>
         <InputLeftElement
