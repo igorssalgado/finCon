@@ -36,7 +36,7 @@ const InputExpense = (props) => {
 
   return (
     <Formik
-      // initialValues={{ expenseName: "OUTRACOISA", amount: 2 }}
+      initialValues={{ expenseName: "", amount: "" }}
       onSubmit={(values, actions) => {
         props.addExpense(values);
         setTimeout(() => {

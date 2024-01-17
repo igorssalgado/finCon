@@ -79,7 +79,6 @@ function App() {
             Fixed Expenses
           </Button>
           <Button
-            onMouseOver={false}
             bgColor={buttonsColor.var}
             onClick={() => {
               setCurrentExpense(allExpenses[1]);
