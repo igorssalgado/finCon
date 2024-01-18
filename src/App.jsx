@@ -1,6 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   addCurrentExpenseAction,
@@ -10,7 +9,16 @@ import { updateCurrentExpenseNameAction } from "./store/currentExpenseName/curre
 import { addAllExpensesAction } from "./store/allExpenses/allExpenses-slice";
 import { setIncomeAction } from "./store/income/currentExpenseName-slice";
 
-import { Grid, GridItem, Button } from "@chakra-ui/react";
+import {
+  Grid,
+  GridItem,
+  Button,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from "@chakra-ui/react";
 
 import { fetchPost, addItem } from "./database/database";
 
@@ -20,12 +28,6 @@ import CashIncome from "./components/CashIncome";
 import ExpenseTable from "./containers/ExpenseTable/ExpenseTable";
 
 function App() {
-  const [buttonsColor, setButtonsColors] = React.useState({
-    fixed: "",
-    var: "",
-    cap: "",
-  });
-
   const dispatch = useDispatch();
 
   const income = useSelector((store) => store.INCOME.income);
@@ -58,6 +60,11 @@ function App() {
     addItem(item, currentExpenseName);
   }
 
+  function setTab(expenseName, expenses) {
+    dispatch(updateCurrentExpenseNameAction(expenseName, expenses));
+    dispatch(addCurrentExpenseAction(expenses));
+  }
+
   return (
     <>
       <Grid
@@ -80,37 +87,32 @@ function App() {
           {currentExpenseName && <InputExpense addExpense={addExpense} />}
         </GridItem>
         <GridItem pl="2" area={"main"} bg="blue.900">
-          <Button
-            bgColor={buttonsColor.fixed}
-            onClick={() => {
-              dispatch(updateCurrentExpenseNameAction("fixedExpenses"));
-              dispatch(addCurrentExpenseAction(allExpenses[0]));
-              setButtonsColors({ fixed: "green.300", var: "", cap: "" });
-            }}
-          >
-            Fixed Expenses
-          </Button>
-          <Button
-            bgColor={buttonsColor.var}
-            onClick={() => {
-              dispatch(updateCurrentExpenseNameAction("variableExpenses"));
-              dispatch(addCurrentExpenseAction(allExpenses[1]));
-              setButtonsColors({ fixed: "", var: "green.300", cap: "" });
-            }}
-          >
-            Variable Expenses
-          </Button>
-          <Button
-            bgColor={buttonsColor.cap}
-            onClick={() => {
-              dispatch(updateCurrentExpenseNameAction("capitalAccumulation"));
-              dispatch(addCurrentExpenseAction(allExpenses[2]));
-              setButtonsColors({ fixed: "", var: "", cap: "green.300" });
-            }}
-          >
-            Capital Accumulation
-          </Button>
-          {currentExpenseName && <ExpenseTable />}
+          <Tabs size="md" variant="enclosed">
+            <TabList>
+              <Tab
+                onClick={() => {
+                  setTab("fixedExpenses", allExpenses[0]);
+                }}
+              >
+                fixedExpenses
+              </Tab>
+              <Tab
+                onClick={() => {
+                  setTab("variableExpenses", allExpenses[1]);
+                }}
+              >
+                variableExpenses
+              </Tab>
+              <Tab
+                onClick={() => {
+                  setTab("capitalAccumulation", allExpenses[2]);
+                }}
+              >
+                capitalAccumulation
+              </Tab>
+            </TabList>
+            <TabPanels>{currentExpenseName && <ExpenseTable />}</TabPanels>
+          </Tabs>
         </GridItem>
       </Grid>
     </>
