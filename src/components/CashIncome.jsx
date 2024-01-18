@@ -5,7 +5,6 @@ import {
   SliderThumb,
   SliderMark,
   Box,
-  Text,
   Input,
   InputGroup,
   InputLeftElement,
@@ -17,7 +16,7 @@ import { CheckIcon } from "@chakra-ui/icons";
 import { FormatCurrency } from "../utils/FormatCurrency";
 
 const CashIncome = (props) => {
-  const [sliderValue, setSliderValue] = React.useState(5300);
+  const [sliderValue, setSliderValue] = React.useState(5022);
 
   const [mouseOver, setMouseOver] = React.useState(false);
 

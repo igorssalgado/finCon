@@ -10,28 +10,31 @@ import {
 import React from "react";
 import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 
-import { FormatCurrency } from "../utils/FormatCurrency";
+import { FormatCurrency } from "../../utils/FormatCurrency";
+import { useSelector } from "react-redux";
 
 const ExpensesTotal = (props) => {
   let sumFixed = 0;
   let sumVariable = 0;
   let sumCapital = 0;
-  let income = props.income;
+  let income = useSelector((store) => store.INCOME.income);
 
-  props.allExpenses[0].map((item) => {
+  const allExpenses = useSelector((store) => store.ALLEXPENSES.allExpenses);
+
+  allExpenses[0].map((item) => {
     sumFixed += item.amount;
   });
 
-  props.allExpenses[1].map((item) => {
+  allExpenses[1].map((item) => {
     sumVariable += item.amount;
   });
 
-  props.allExpenses[2].map((item) => {
+  allExpenses[2].map((item) => {
     sumCapital += item.amount;
   });
 
   function expensePercent(total, income) {
-    return (total / income) * 100;
+    return Math.ceil((total / income) * 100);
   }
 
   return (
