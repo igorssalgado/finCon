@@ -8,19 +8,18 @@ import {
 } from "./store/currentExpense/currentExpense-slice";
 import { updateCurrentExpenseNameAction } from "./store/currentExpenseName/currentExpenseName-slice";
 import { addAllExpensesAction } from "./store/allExpenses/allExpenses-slice";
+import { setIncomeAction } from "./store/income/currentExpenseName-slice";
 
 import { Grid, GridItem, Button } from "@chakra-ui/react";
 
 import { fetchPost, addItem } from "./database/database";
 
 import InputExpense from "./containers/InputExpense/InputExpense";
-import ExpensesTotal from "./components/ExpensesTotal";
+import ExpensesTotal from "./containers/ExpensesTotal/ExpensesTotal";
 import CashIncome from "./components/CashIncome";
 import ExpenseTable from "./containers/ExpenseTable/ExpenseTable";
-import { setIncomeAction } from "./store/income/currentExpenseName-slice";
 
 function App() {
-  // const [income, setIncome] = React.useState(0);
   const [buttonsColor, setButtonsColors] = React.useState({
     fixed: "",
     var: "",

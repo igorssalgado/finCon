@@ -5,7 +5,6 @@ import {
   SliderThumb,
   SliderMark,
   Box,
-  Text,
   Input,
   InputGroup,
   InputLeftElement,

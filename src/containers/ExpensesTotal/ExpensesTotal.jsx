@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 
-import { FormatCurrency } from "../utils/FormatCurrency";
+import { FormatCurrency } from "../../utils/FormatCurrency";
 import { useSelector } from "react-redux";
 
 const ExpensesTotal = (props) => {
@@ -34,7 +34,7 @@ const ExpensesTotal = (props) => {
   });
 
   function expensePercent(total, income) {
-    return (total / income) * 100;
+    return Math.ceil((total / income) * 100);
   }
 
   return (
