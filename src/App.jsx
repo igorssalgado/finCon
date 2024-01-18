@@ -49,8 +49,7 @@ function App() {
   async function getData() {
     const data = await fetchPost();
     dispatch(addAllExpensesAction(data));
-    dispatch(updateCurrentExpenseNameAction("fixedExpenses", data[0]));
-    dispatch(updateCurrentExpenseAction(data[0]));
+    setTab("fixedExpenses", data[0]);
   }
 
   function updateIncome(value) {
@@ -69,26 +68,26 @@ function App() {
 
   return (
     <>
-      <Grid
-        templateAreas={`"header header2"
+      {currentExpense && (
+        <Grid
+          templateAreas={`"header header2"
                   "nav main"
                   "nav main"`}
-        gridTemplateRows={"150px 1fr 500px"}
-        gridTemplateColumns={"400px 1fr"}
-        gap="1"
-        color="whiteAlpha.800"
-        fontWeight="bold"
-      >
-        <GridItem padding={3} area={"header"} bg="red.900">
-          {allExpenses && <ExpensesTotal income={income} />}
-        </GridItem>
-        <GridItem padding={5} area={"header2"} bg="orange.900">
-          <CashIncome updateIncome={updateIncome} />
-        </GridItem>
-        <GridItem pl="2" area={"nav"} bg="green.900">
-          {currentExpenseName && <InputExpense addExpense={addExpense} />}
-        </GridItem>
-        {currentExpense && (
+          gridTemplateRows={"150px 1fr 500px"}
+          gridTemplateColumns={"400px 1fr"}
+          gap="1"
+          color="whiteAlpha.800"
+          fontWeight="bold"
+        >
+          <GridItem padding={3} area={"header"} bg="red.900">
+            <ExpensesTotal income={income} />
+          </GridItem>
+          <GridItem padding={5} area={"header2"} bg="orange.900">
+            <CashIncome updateIncome={updateIncome} />
+          </GridItem>
+          <GridItem pl="2" area={"nav"} bg="green.900">
+            <InputExpense addExpense={addExpense} />
+          </GridItem>
           <GridItem pl="2" area={"main"} bg="blue.900">
             <Tabs size="md" variant="enclosed">
               <TabList>
@@ -97,21 +96,21 @@ function App() {
                     setTab("fixedExpenses", allExpenses[0]);
                   }}
                 >
-                  fixedExpenses
+                  Fixed Expenses
                 </Tab>
                 <Tab
                   onClick={() => {
                     setTab("variableExpenses", allExpenses[1]);
                   }}
                 >
-                  variableExpenses
+                  Variable Expenses
                 </Tab>
                 <Tab
                   onClick={() => {
                     setTab("capitalAccumulation", allExpenses[2]);
                   }}
                 >
-                  capitalAccumulation
+                  Capital Accumulation
                 </Tab>
               </TabList>
               <TabPanels>
@@ -119,8 +118,8 @@ function App() {
               </TabPanels>
             </Tabs>
           </GridItem>
-        )}
-      </Grid>
+        </Grid>
+      )}
     </>
   );
 }
