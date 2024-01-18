@@ -17,21 +17,34 @@ export async function fetchPost() {
   let data = [];
   await getDocs(collection(db, "fixedExpenses"))
     .then((querySnapshot) => {
-      const newData = querySnapshot.docs.map((doc) => doc.data());
+      const newData = querySnapshot.docs.map((doc) => {
+        let data = doc.data();
+        data = { ...data, id: doc.id };
+        return data;
+      });
+
       data.push(newData);
     })
     .catch((e) => console.log("entrou no erro " + e));
 
   await getDocs(collection(db, "variableExpenses"))
     .then((querySnapshot) => {
-      const newData = querySnapshot.docs.map((doc) => doc.data());
+      const newData = querySnapshot.docs.map((doc) => {
+        let data = doc.data();
+        data = { ...data, id: doc.id };
+        return data;
+      });
       data.push(newData);
     })
     .catch((e) => console.log("entrou no erro " + e));
 
   await getDocs(collection(db, "capitalAccumulation"))
     .then((querySnapshot) => {
-      const newData = querySnapshot.docs.map((doc) => doc.data());
+      const newData = querySnapshot.docs.map((doc) => {
+        let data = doc.data();
+        data = { ...data, id: doc.id };
+        return data;
+      });
       data.push(newData);
     })
     .catch((e) => console.log("entrou no erro " + e));

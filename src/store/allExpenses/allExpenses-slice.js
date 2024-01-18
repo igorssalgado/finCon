@@ -4,9 +4,9 @@ export const allExpensesSlice = createSlice({
   name: "allExpensesSlice",
   initialState: {
     allExpenses: [
-      [{ expenseName: "-", amount: "-" }],
-      [{ expenseName: "-", amount: "-" }],
-      [{ expenseName: "-", amount: "-" }],
+      [{ expenseName: "", amount: "" }],
+      [{ expenseName: "", amount: "" }],
+      [{ expenseName: "", amount: "" }],
     ],
   },
   reducers: {

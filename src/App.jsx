@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  addCurrentExpenseAction,
+  updateCurrentExpenseAction,
   addExpenseAction,
 } from "./store/currentExpense/currentExpense-slice";
 import { updateCurrentExpenseNameAction } from "./store/currentExpenseName/currentExpenseName-slice";
@@ -44,11 +44,12 @@ function App() {
 
   React.useEffect(() => {
     getData();
-  }, [currentExpense]);
+  }, []);
 
   async function getData() {
     const data = await fetchPost();
     dispatch(addAllExpensesAction(data));
+    setTab("fixedExpenses", allExpenses[0]);
   }
 
   function updateIncome(value) {
@@ -62,7 +63,7 @@ function App() {
 
   function setTab(expenseName, expenses) {
     dispatch(updateCurrentExpenseNameAction(expenseName, expenses));
-    dispatch(addCurrentExpenseAction(expenses));
+    dispatch(updateCurrentExpenseAction(expenses));
   }
 
   return (
@@ -86,34 +87,36 @@ function App() {
         <GridItem pl="2" area={"nav"} bg="green.900">
           {currentExpenseName && <InputExpense addExpense={addExpense} />}
         </GridItem>
-        <GridItem pl="2" area={"main"} bg="blue.900">
-          <Tabs size="md" variant="enclosed">
-            <TabList>
-              <Tab
-                onClick={() => {
-                  setTab("fixedExpenses", allExpenses[0]);
-                }}
-              >
-                fixedExpenses
-              </Tab>
-              <Tab
-                onClick={() => {
-                  setTab("variableExpenses", allExpenses[1]);
-                }}
-              >
-                variableExpenses
-              </Tab>
-              <Tab
-                onClick={() => {
-                  setTab("capitalAccumulation", allExpenses[2]);
-                }}
-              >
-                capitalAccumulation
-              </Tab>
-            </TabList>
-            <TabPanels>{currentExpenseName && <ExpenseTable />}</TabPanels>
-          </Tabs>
-        </GridItem>
+        {currentExpenseName && (
+          <GridItem pl="2" area={"main"} bg="blue.900">
+            <Tabs size="md" variant="enclosed">
+              <TabList>
+                <Tab
+                  onClick={() => {
+                    setTab("fixedExpenses", allExpenses[0]);
+                  }}
+                >
+                  fixedExpenses
+                </Tab>
+                <Tab
+                  onClick={() => {
+                    setTab("variableExpenses", allExpenses[1]);
+                  }}
+                >
+                  variableExpenses
+                </Tab>
+                <Tab
+                  onClick={() => {
+                    setTab("capitalAccumulation", allExpenses[2]);
+                  }}
+                >
+                  capitalAccumulation
+                </Tab>
+              </TabList>
+              <TabPanels>{currentExpenseName && <ExpenseTable />}</TabPanels>
+            </Tabs>
+          </GridItem>
+        )}
       </Grid>
     </>
   );

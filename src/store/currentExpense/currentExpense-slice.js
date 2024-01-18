@@ -6,7 +6,7 @@ export const currentExpenseSlice = createSlice({
     currentExpense: [],
   },
   reducers: {
-    addCurrentExpenseAction: (currentSlice, action) => {
+    updateCurrentExpenseAction: (currentSlice, action) => {
       currentSlice.currentExpense = action.payload;
     },
     addExpenseAction: (currentSlice, action) => {
@@ -15,5 +15,5 @@ export const currentExpenseSlice = createSlice({
   },
 });
 
-export const { addCurrentExpenseAction, addExpenseAction } =
+export const { updateCurrentExpenseAction, addExpenseAction } =
   currentExpenseSlice.actions;
