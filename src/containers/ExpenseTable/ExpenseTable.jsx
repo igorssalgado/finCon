@@ -9,6 +9,7 @@ import {
   Tbody,
   Td,
   Text,
+  Button,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
@@ -16,6 +17,7 @@ const ExpenseTable = () => {
   const [list, setList] = React.useState();
 
   const expense = useSelector((store) => store.CURRENTEXPENSE.currentExpense);
+  console.log(expense);
 
   React.useEffect(() => {
     expense &&
@@ -25,6 +27,9 @@ const ExpenseTable = () => {
             <Tr key={Math.random() * 5}>
               <Td>{item.expenseName}</Td>
               <Td>{item.amount}</Td>
+              <Td>
+                <Button onClick={() => console.log("delete")}>x</Button>
+              </Td>
             </Tr>
           );
         })

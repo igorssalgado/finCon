@@ -49,7 +49,8 @@ function App() {
   async function getData() {
     const data = await fetchPost();
     dispatch(addAllExpensesAction(data));
-    setTab("fixedExpenses", allExpenses[0]);
+    dispatch(updateCurrentExpenseNameAction("fixedExpenses", data[0]));
+    dispatch(updateCurrentExpenseAction(data[0]));
   }
 
   function updateIncome(value) {
@@ -87,7 +88,7 @@ function App() {
         <GridItem pl="2" area={"nav"} bg="green.900">
           {currentExpenseName && <InputExpense addExpense={addExpense} />}
         </GridItem>
-        {currentExpenseName && (
+        {currentExpense && (
           <GridItem pl="2" area={"main"} bg="blue.900">
             <Tabs size="md" variant="enclosed">
               <TabList>
@@ -113,7 +114,9 @@ function App() {
                   capitalAccumulation
                 </Tab>
               </TabList>
-              <TabPanels>{currentExpenseName && <ExpenseTable />}</TabPanels>
+              <TabPanels>
+                <ExpenseTable />
+              </TabPanels>
             </Tabs>
           </GridItem>
         )}

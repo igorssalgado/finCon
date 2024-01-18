@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const currentExpenseSlice = createSlice({
   name: "currentExpenseSlice",
   initialState: {
-    currentExpense: [],
+    currentExpense: undefined,
   },
   reducers: {
     updateCurrentExpenseAction: (currentSlice, action) => {
