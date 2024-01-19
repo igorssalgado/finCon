@@ -22,15 +22,19 @@ const ExpenseTable = (props) => {
     expense &&
       setList(
         expense.map((item) => {
-          return (
-            <Tr key={Math.random() * 5}>
-              <Td>{item.expenseName}</Td>
-              <Td>{item.amount}</Td>
-              <Td>
-                <Button onClick={() => props.deleteExpense(item.id)}>x</Button>
-              </Td>
-            </Tr>
-          );
+          if (item.expenseName) {
+            return (
+              <Tr key={Math.random() * 5}>
+                <Td>{item.expenseName}</Td>
+                <Td>{item.amount}</Td>
+                <Td>
+                  <Button onClick={() => props.deleteExpense(item.id)}>
+                    x
+                  </Button>
+                </Td>
+              </Tr>
+            );
+          }
         })
       );
   }, [expense]);
