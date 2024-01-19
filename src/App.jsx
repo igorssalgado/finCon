@@ -20,7 +20,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 
-import { fetchPost, addItem } from "./database/database";
+import { fetchPost, addItem, deleteItem } from "./database/database";
 
 import InputExpense from "./containers/InputExpense/InputExpense";
 import ExpensesTotal from "./containers/ExpensesTotal/ExpensesTotal";
@@ -43,13 +43,25 @@ function App() {
   );
 
   React.useEffect(() => {
-    getData();
+    console.log("entrou");
+    getData("fixedExpenses");
   }, []);
 
-  async function getData() {
-    const data = await fetchPost();
-    dispatch(addAllExpensesAction(data));
-    setTab("fixedExpenses", data[0]);
+  async function getData(currentExpenseName) {
+    const allData = await fetchPost();
+    console.log(allData);
+
+    let currentData;
+    if (currentExpenseName === "fixedExpenses") {
+      currentData = allData[0];
+    } else if (currentExpenseName === "variableExpenses") {
+      currentData = allData[1];
+    } else {
+      currentData = allData[2];
+    }
+
+    dispatch(addAllExpensesAction(allData));
+    setTab(currentExpenseName, currentData);
   }
 
   function updateIncome(value) {
@@ -59,11 +71,21 @@ function App() {
   function addExpense(item) {
     dispatch(addExpenseAction([...currentExpense, item]));
     addItem(item, currentExpenseName);
+    getData(currentExpenseName);
   }
 
   function setTab(expenseName, expenses) {
     dispatch(updateCurrentExpenseNameAction(expenseName, expenses));
     dispatch(updateCurrentExpenseAction(expenses));
+  }
+
+  function deleteExpense(id) {
+    let array = [...currentExpense];
+    const index = array.findIndex((item) => item.id === id);
+    array.splice(index, 1);
+    dispatch(updateCurrentExpenseAction(array));
+    deleteItem(id, currentExpenseName);
+    getData(currentExpenseName);
   }
 
   return (
@@ -114,7 +136,7 @@ function App() {
                 </Tab>
               </TabList>
               <TabPanels>
-                <ExpenseTable />
+                <ExpenseTable deleteExpense={deleteExpense} />
               </TabPanels>
             </Tabs>
           </GridItem>

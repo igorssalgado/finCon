@@ -1,4 +1,10 @@
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "./firebase";
 
 export async function addItem(item, collectionName) {
@@ -13,6 +19,18 @@ export async function addItem(item, collectionName) {
   }
 }
 
+export async function deleteItem(id, collectionName) {
+  console.log(id, collectionName);
+
+  try {
+    let dataToDelete = await doc(db, collectionName, id);
+    deleteDoc(dataToDelete);
+    console.log("Document deleted with ID: ", id);
+  } catch (e) {
+    console.error("Error deleting document: ", e);
+  }
+}
+
 export async function fetchPost() {
   let data = [];
   await getDocs(collection(db, "fixedExpenses"))
@@ -22,7 +40,6 @@ export async function fetchPost() {
         data = { ...data, id: doc.id };
         return data;
       });
-
       data.push(newData);
     })
     .catch((e) => console.log("entrou no erro " + e));

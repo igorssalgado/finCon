@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import {
   TableContainer,
@@ -11,13 +12,11 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
 
-const ExpenseTable = () => {
+const ExpenseTable = (props) => {
   const [list, setList] = React.useState();
 
   const expense = useSelector((store) => store.CURRENTEXPENSE.currentExpense);
-  console.log(expense);
 
   React.useEffect(() => {
     expense &&
@@ -28,7 +27,7 @@ const ExpenseTable = () => {
               <Td>{item.expenseName}</Td>
               <Td>{item.amount}</Td>
               <Td>
-                <Button onClick={() => console.log("delete")}>x</Button>
+                <Button onClick={() => props.deleteExpense(item.id)}>x</Button>
               </Td>
             </Tr>
           );
