@@ -21,17 +21,19 @@ const ExpensesTotal = (props) => {
 
   const allExpenses = useSelector((store) => store.ALLEXPENSES.allExpenses);
 
-  allExpenses[0].map((item) => {
-    sumFixed += item.amount;
-  });
+  if (allExpenses) {
+    allExpenses[0].map((item) => {
+      sumFixed += item.amount;
+    });
 
-  allExpenses[1].map((item) => {
-    sumVariable += item.amount;
-  });
+    allExpenses[1].map((item) => {
+      sumVariable += item.amount;
+    });
 
-  allExpenses[2].map((item) => {
-    sumCapital += item.amount;
-  });
+    allExpenses[2].map((item) => {
+      sumCapital += item.amount;
+    });
+  }
 
   function expensePercent(total, income) {
     return Math.ceil((total / income) * 100);

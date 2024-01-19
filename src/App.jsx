@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  addCurrentExpenseAction,
+  updateCurrentExpenseAction,
   addExpenseAction,
 } from "./store/currentExpense/currentExpense-slice";
 import { updateCurrentExpenseNameAction } from "./store/currentExpenseName/currentExpenseName-slice";
@@ -20,7 +20,7 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 
-import { fetchPost, addItem } from "./database/database";
+import { fetchPost, addItem, deleteItem } from "./database/database";
 
 import InputExpense from "./containers/InputExpense/InputExpense";
 import ExpensesTotal from "./containers/ExpensesTotal/ExpensesTotal";
@@ -43,12 +43,25 @@ function App() {
   );
 
   React.useEffect(() => {
-    getData();
-  }, [currentExpense]);
+    console.log("entrou");
+    getData("fixedExpenses");
+  }, []);
 
-  async function getData() {
-    const data = await fetchPost();
-    dispatch(addAllExpensesAction(data));
+  async function getData(currentExpenseName) {
+    const allData = await fetchPost();
+    console.log(allData);
+
+    let currentData;
+    if (currentExpenseName === "fixedExpenses") {
+      currentData = allData[0];
+    } else if (currentExpenseName === "variableExpenses") {
+      currentData = allData[1];
+    } else {
+      currentData = allData[2];
+    }
+
+    dispatch(addAllExpensesAction(allData));
+    setTab(currentExpenseName, currentData);
   }
 
   function updateIncome(value) {
@@ -58,63 +71,77 @@ function App() {
   function addExpense(item) {
     dispatch(addExpenseAction([...currentExpense, item]));
     addItem(item, currentExpenseName);
+    getData(currentExpenseName);
   }
 
   function setTab(expenseName, expenses) {
     dispatch(updateCurrentExpenseNameAction(expenseName, expenses));
-    dispatch(addCurrentExpenseAction(expenses));
+    dispatch(updateCurrentExpenseAction(expenses));
+  }
+
+  function deleteExpense(id) {
+    let array = [...currentExpense];
+    const index = array.findIndex((item) => item.id === id);
+    array.splice(index, 1);
+    dispatch(updateCurrentExpenseAction(array));
+    deleteItem(id, currentExpenseName);
+    getData(currentExpenseName);
   }
 
   return (
     <>
-      <Grid
-        templateAreas={`"header header2"
+      {currentExpense && (
+        <Grid
+          templateAreas={`"header header2"
                   "nav main"
                   "nav main"`}
-        gridTemplateRows={"150px 1fr 500px"}
-        gridTemplateColumns={"400px 1fr"}
-        gap="1"
-        color="whiteAlpha.800"
-        fontWeight="bold"
-      >
-        <GridItem padding={3} area={"header"} bg="red.900">
-          {allExpenses && <ExpensesTotal income={income} />}
-        </GridItem>
-        <GridItem padding={5} area={"header2"} bg="orange.900">
-          <CashIncome updateIncome={updateIncome} />
-        </GridItem>
-        <GridItem pl="2" area={"nav"} bg="green.900">
-          {currentExpenseName && <InputExpense addExpense={addExpense} />}
-        </GridItem>
-        <GridItem pl="2" area={"main"} bg="blue.900">
-          <Tabs size="md" variant="enclosed">
-            <TabList>
-              <Tab
-                onClick={() => {
-                  setTab("fixedExpenses", allExpenses[0]);
-                }}
-              >
-                fixedExpenses
-              </Tab>
-              <Tab
-                onClick={() => {
-                  setTab("variableExpenses", allExpenses[1]);
-                }}
-              >
-                variableExpenses
-              </Tab>
-              <Tab
-                onClick={() => {
-                  setTab("capitalAccumulation", allExpenses[2]);
-                }}
-              >
-                capitalAccumulation
-              </Tab>
-            </TabList>
-            <TabPanels>{currentExpenseName && <ExpenseTable />}</TabPanels>
-          </Tabs>
-        </GridItem>
-      </Grid>
+          gridTemplateRows={"150px 1fr 500px"}
+          gridTemplateColumns={"400px 1fr"}
+          gap="1"
+          color="whiteAlpha.800"
+          fontWeight="bold"
+        >
+          <GridItem padding={3} area={"header"} bg="red.900">
+            <ExpensesTotal income={income} />
+          </GridItem>
+          <GridItem padding={5} area={"header2"} bg="orange.900">
+            <CashIncome updateIncome={updateIncome} />
+          </GridItem>
+          <GridItem pl="2" area={"nav"} bg="green.900">
+            <InputExpense addExpense={addExpense} />
+          </GridItem>
+          <GridItem pl="2" area={"main"} bg="blue.900">
+            <Tabs size="md" variant="enclosed">
+              <TabList>
+                <Tab
+                  onClick={() => {
+                    setTab("fixedExpenses", allExpenses[0]);
+                  }}
+                >
+                  Fixed Expenses
+                </Tab>
+                <Tab
+                  onClick={() => {
+                    setTab("variableExpenses", allExpenses[1]);
+                  }}
+                >
+                  Variable Expenses
+                </Tab>
+                <Tab
+                  onClick={() => {
+                    setTab("capitalAccumulation", allExpenses[2]);
+                  }}
+                >
+                  Capital Accumulation
+                </Tab>
+              </TabList>
+              <TabPanels>
+                <ExpenseTable deleteExpense={deleteExpense} />
+              </TabPanels>
+            </Tabs>
+          </GridItem>
+        </Grid>
+      )}
     </>
   );
 }

@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const currentExpenseSlice = createSlice({
   name: "currentExpenseSlice",
   initialState: {
-    currentExpense: [],
+    currentExpense: undefined,
   },
   reducers: {
-    addCurrentExpenseAction: (currentSlice, action) => {
+    updateCurrentExpenseAction: (currentSlice, action) => {
       currentSlice.currentExpense = action.payload;
     },
     addExpenseAction: (currentSlice, action) => {
@@ -15,5 +15,5 @@ export const currentExpenseSlice = createSlice({
   },
 });
 
-export const { addCurrentExpenseAction, addExpenseAction } =
+export const { updateCurrentExpenseAction, addExpenseAction } =
   currentExpenseSlice.actions;
