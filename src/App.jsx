@@ -18,6 +18,7 @@ import {
   Tab,
   TabPanels,
   TabPanel,
+  VStack,
 } from "@chakra-ui/react";
 
 import { fetchPost, addItem, deleteItem } from "./database/database";
@@ -108,37 +109,42 @@ function App() {
             <CashIncome updateIncome={updateIncome} />
           </GridItem>
           <GridItem pl="2" area={"nav"} bg="green.900">
-            <InputExpense addExpense={addExpense} />
+            whatever
           </GridItem>
           <GridItem pl="2" area={"main"} bg="blue.900">
-            <Tabs size="md" variant="enclosed">
-              <TabList>
-                <Tab
-                  onClick={() => {
-                    setTab("fixedExpenses", allExpenses[0]);
-                  }}
-                >
-                  Fixed Expenses
-                </Tab>
-                <Tab
-                  onClick={() => {
-                    setTab("variableExpenses", allExpenses[1]);
-                  }}
-                >
-                  Variable Expenses
-                </Tab>
-                <Tab
-                  onClick={() => {
-                    setTab("capitalAccumulation", allExpenses[2]);
-                  }}
-                >
-                  Capital Accumulation
-                </Tab>
-              </TabList>
-              <TabPanels>
-                <ExpenseTable deleteExpense={deleteExpense} />
-              </TabPanels>
-            </Tabs>
+            <VStack>
+              <Tabs size="md" variant="enclosed">
+                <TabList>
+                  <Tab
+                    onClick={() => {
+                      setTab("fixedExpenses", allExpenses[0]);
+                    }}
+                  >
+                    Fixed Expenses
+                  </Tab>
+                  <Tab
+                    onClick={() => {
+                      setTab("variableExpenses", allExpenses[1]);
+                    }}
+                  >
+                    Variable Expenses
+                  </Tab>
+                  <Tab
+                    onClick={() => {
+                      setTab("capitalAccumulation", allExpenses[2]);
+                    }}
+                  >
+                    Capital Accumulation
+                  </Tab>
+                </TabList>
+                <TabPanels>
+                  <VStack>
+                    <InputExpense addExpense={addExpense} />
+                    <ExpenseTable deleteExpense={deleteExpense} />
+                  </VStack>
+                </TabPanels>
+              </Tabs>
+            </VStack>
           </GridItem>
         </Grid>
       )}

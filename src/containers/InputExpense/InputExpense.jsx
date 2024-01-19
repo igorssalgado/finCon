@@ -1,7 +1,20 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { Button, FormControl, Input, FormErrorMessage } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  Input,
+  FormErrorMessage,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverContent,
+  Portal,
+  PopoverTrigger,
+  Popover,
+} from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { Field, Form, Formik } from "formik";
 
@@ -41,48 +54,81 @@ const InputExpense = (props) => {
   }
 
   return (
-    <Formik
-      initialValues={{ expenseName: "", amount: "" }}
-      onSubmit={(values, actions) => {
-        props.addExpense(values);
-        setTimeout(() => {
-          actions.setSubmitting(false);
-        }, 250);
-      }}
-    >
-      {(props) => (
-        <Form>
-          <Field name="expenseName" validate={validateName}>
-            {({ field, form }) => (
-              <FormControl
-                isInvalid={form.errors.expenseName && form.touched.expenseName}
-              >
-                <Input {...field} placeholder={placeHolder()} />
-                <FormErrorMessage>{form.errors.expenseName}</FormErrorMessage>
-              </FormControl>
-            )}
-          </Field>
-          <Field name="amount" validate={validateAmount}>
-            {({ field, form }) => (
-              <FormControl
-                isInvalid={form.errors.amount && form.touched.amount}
-              >
-                <Input {...field} type="number" placeholder="Amount" />
-                <FormErrorMessage>{form.errors.amount}</FormErrorMessage>
-              </FormControl>
-            )}
-          </Field>
-          <Button
-            mt={4}
-            colorScheme="teal"
-            isLoading={props.isSubmitting}
-            type="submit"
-          >
-            <AddIcon />
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <Popover>
+        {({ onClose }) => (
+          <>
+            <PopoverTrigger>
+              <Button>{placeHolder()}</Button>
+            </PopoverTrigger>
+            <Portal>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverBody>
+                  <Formik
+                    initialValues={{ expenseName: "", amount: "" }}
+                    onSubmit={(values, actions) => {
+                      props.addExpense(values);
+                      setTimeout(() => {
+                        actions.setSubmitting(false);
+                        actions.resetForm();
+                      }, 250);
+                    }}
+                  >
+                    {(props) => (
+                      <Form>
+                        <Field name="expenseName" validate={validateName}>
+                          {({ field, form }) => (
+                            <FormControl
+                              isInvalid={
+                                form.errors.expenseName &&
+                                form.touched.expenseName
+                              }
+                            >
+                              <Input {...field} placeholder={placeHolder()} />
+                              <FormErrorMessage>
+                                {form.errors.expenseName}
+                              </FormErrorMessage>
+                            </FormControl>
+                          )}
+                        </Field>
+                        <Field name="amount" validate={validateAmount}>
+                          {({ field, form }) => (
+                            <FormControl
+                              isInvalid={
+                                form.errors.amount && form.touched.amount
+                              }
+                            >
+                              <Input
+                                {...field}
+                                type="number"
+                                placeholder="Amount"
+                              />
+                              <FormErrorMessage>
+                                {form.errors.amount}
+                              </FormErrorMessage>
+                            </FormControl>
+                          )}
+                        </Field>
+                        <Button
+                          mt={4}
+                          colorScheme="teal"
+                          isLoading={props.isSubmitting}
+                          onClick={onClose}
+                          type="submit"
+                        >
+                          <AddIcon />
+                        </Button>
+                      </Form>
+                    )}
+                  </Formik>
+                </PopoverBody>
+              </PopoverContent>
+            </Portal>
+          </>
+        )}
+      </Popover>
+    </>
   );
 };
 

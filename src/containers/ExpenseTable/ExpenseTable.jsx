@@ -12,6 +12,7 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const ExpenseTable = (props) => {
   const [list, setList] = React.useState();
@@ -28,8 +29,11 @@ const ExpenseTable = (props) => {
                 <Td>{item.expenseName}</Td>
                 <Td>{item.amount}</Td>
                 <Td>
-                  <Button onClick={() => props.deleteExpense(item.id)}>
-                    x
+                  <Button
+                    variant="link"
+                    onClick={() => props.deleteExpense(item.id)}
+                  >
+                    <DeleteIcon w={5} h={3} color={"white.500"} />
                   </Button>
                 </Td>
               </Tr>
