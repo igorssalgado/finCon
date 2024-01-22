@@ -45,13 +45,11 @@ function App() {
   );
 
   React.useEffect(() => {
-    console.log("entrou");
     getData("fixedExpenses");
   }, []);
 
   async function getData(currentExpenseName) {
     const allData = await fetchPost();
-    console.log(allData);
 
     let currentData;
     if (currentExpenseName === "fixedExpenses") {
