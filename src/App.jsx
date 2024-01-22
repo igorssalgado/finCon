@@ -27,6 +27,7 @@ import InputExpense from "./containers/InputExpense/InputExpense";
 import ExpensesTotal from "./containers/ExpensesTotal/ExpensesTotal";
 import CashIncome from "./components/CashIncome";
 import ExpenseTable from "./containers/ExpenseTable/ExpenseTable";
+import ToogleColorMode from "./components/ToogleColorMode";
 
 function App() {
   const dispatch = useDispatch();
@@ -99,19 +100,19 @@ function App() {
           gridTemplateRows={"150px 1fr 500px"}
           gridTemplateColumns={"400px 1fr"}
           gap="1"
-          color="whiteAlpha.800"
+          // color="whiteAlpha.800"
           fontWeight="bold"
         >
-          <GridItem padding={3} area={"header"} bg="red.900">
+          <GridItem padding={3} area={"header"}>
             <ExpensesTotal income={income} />
           </GridItem>
-          <GridItem padding={5} area={"header2"} bg="orange.900">
+          <GridItem padding={5} area={"header2"}>
             <CashIncome updateIncome={updateIncome} />
           </GridItem>
-          <GridItem pl="2" area={"nav"} bg="green.900">
-            whatever
+          <GridItem pl="2" area={"nav"}>
+            <ToogleColorMode />
           </GridItem>
-          <GridItem pl="2" area={"main"} bg="blue.900">
+          <GridItem pl="2" area={"main"}>
             <VStack>
               <Tabs size="md" variant="enclosed">
                 <TabList>
