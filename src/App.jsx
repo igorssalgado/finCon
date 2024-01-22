@@ -103,16 +103,17 @@ function App() {
           // color="whiteAlpha.800"
           fontWeight="bold"
         >
-          <GridItem padding={3} area={"header"}>
+          <GridItem padding={3} area={"header"} bgColor={"gray.700"}>
             <ExpensesTotal income={income} />
           </GridItem>
-          <GridItem padding={5} area={"header2"}>
+          <GridItem padding={5} area={"header2"} bgColor={"gray.700"}>
+            <ToogleColorMode />
             <CashIncome updateIncome={updateIncome} />
           </GridItem>
-          <GridItem pl="2" area={"nav"}>
-            <ToogleColorMode />
+          <GridItem pl="2" area={"nav"} bgColor={"gray.700"}>
+            qlqrcoisa
           </GridItem>
-          <GridItem pl="2" area={"main"}>
+          <GridItem pl="2" area={"main"} bgColor={"gray.700"}>
             <VStack>
               <Tabs size="md" variant="enclosed">
                 <TabList>
