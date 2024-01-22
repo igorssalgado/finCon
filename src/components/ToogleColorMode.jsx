@@ -6,7 +6,7 @@ const ToogleColorMode = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Button onClick={toggleColorMode}>
+    <Button onClick={toggleColorMode} position={"absolute"} right={5}>
       {colorMode === "light" ? (
         <MoonIcon color={"blue.700"}></MoonIcon>
       ) : (

@@ -42,8 +42,6 @@ const ExpensesTotal = (props) => {
   return (
     <>
       <StatGroup>
-        Cash Flow:
-        <Text>income</Text>
         <HStack>
           <Stat>
             <StatLabel>Fixed Expenses</StatLabel>

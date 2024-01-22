@@ -45,13 +45,11 @@ function App() {
   );
 
   React.useEffect(() => {
-    console.log("entrou");
     getData("fixedExpenses");
   }, []);
 
   async function getData(currentExpenseName) {
     const allData = await fetchPost();
-    console.log(allData);
 
     let currentData;
     if (currentExpenseName === "fixedExpenses") {
@@ -94,23 +92,19 @@ function App() {
     <>
       {currentExpense && (
         <Grid
-          templateAreas={`"header header2"
-                  "nav main"
-                  "nav main"`}
-          gridTemplateRows={"150px 1fr 500px"}
-          gridTemplateColumns={"400px 1fr"}
+          templateAreas={`"header input"
+                  "main main"`}
+          gridTemplateRows={"150px 100%"}
+          gridTemplateColumns={"50% 50%"}
           gap="1"
-          // color="whiteAlpha.800"
           fontWeight="bold"
         >
           <GridItem padding={3} area={"header"}>
             <ExpensesTotal income={income} />
           </GridItem>
-          <GridItem padding={5} area={"header2"}>
-            <CashIncome updateIncome={updateIncome} />
-          </GridItem>
-          <GridItem pl="2" area={"nav"}>
+          <GridItem padding={5} area={"input"}>
             <ToogleColorMode />
+            <CashIncome updateIncome={updateIncome} />
           </GridItem>
           <GridItem pl="2" area={"main"}>
             <VStack>
