@@ -68,3 +68,19 @@ export async function fetchPost() {
 
   return data;
 }
+
+export async function getAllIncomes() {
+  let data = [];
+  await getDocs(collection(db, "inputIncome"))
+    .then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => {
+        let data = doc.data();
+        data = { ...data, id: doc.id };
+        return data;
+      });
+      data.push(newData);
+    })
+    .catch((e) => console.log("entrou no erro " + e));
+
+  return data;
+}

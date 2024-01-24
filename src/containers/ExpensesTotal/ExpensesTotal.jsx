@@ -17,9 +17,10 @@ const ExpensesTotal = (props) => {
   let sumFixed = 0;
   let sumVariable = 0;
   let sumCapital = 0;
-  let income = useSelector((store) => store.INCOME.income);
 
   const allExpenses = useSelector((store) => store.ALLEXPENSES.allExpenses);
+
+  let incomeTotal = useSelector((store) => store.INCOME.incomeTotal);
 
   if (allExpenses) {
     allExpenses[0].map((item) => {
@@ -47,12 +48,12 @@ const ExpensesTotal = (props) => {
             <StatLabel>Fixed Expenses</StatLabel>
             <StatNumber>{FormatCurrency(sumFixed)}</StatNumber>
             <StatHelpText>
-              {expensePercent(sumFixed, income) > 50 ? (
+              {expensePercent(sumFixed, incomeTotal) > 50 ? (
                 <WarningIcon color={"red"} />
               ) : (
                 <CheckCircleIcon color={"green"} />
               )}
-              {Math.floor(expensePercent(sumFixed, income))}%
+              {Math.floor(expensePercent(sumFixed, incomeTotal))}%
             </StatHelpText>
           </Stat>
 
@@ -60,12 +61,12 @@ const ExpensesTotal = (props) => {
             <StatLabel>Variable Expenses</StatLabel>
             <StatNumber>{FormatCurrency(sumVariable)}</StatNumber>
             <StatHelpText>
-              {expensePercent(sumVariable, income) > 30 ? (
+              {expensePercent(sumVariable, incomeTotal) > 30 ? (
                 <WarningIcon color={"red"} />
               ) : (
                 <CheckCircleIcon color={"green"} />
               )}
-              {Math.floor(expensePercent(sumVariable, income))}%
+              {Math.floor(expensePercent(sumVariable, incomeTotal))}%
             </StatHelpText>
           </Stat>
 
@@ -73,12 +74,12 @@ const ExpensesTotal = (props) => {
             <StatLabel>Capital Accumulation</StatLabel>
             <StatNumber>{FormatCurrency(sumCapital)}</StatNumber>
             <StatHelpText>
-              {expensePercent(sumCapital, income) < 20 ? (
+              {expensePercent(sumCapital, incomeTotal) < 20 ? (
                 <WarningIcon color={"red"} />
               ) : (
                 <CheckCircleIcon color={"green"} />
               )}
-              {Math.floor(expensePercent(sumCapital, income))}%
+              {Math.floor(expensePercent(sumCapital, incomeTotal))}%
             </StatHelpText>
           </Stat>
         </HStack>

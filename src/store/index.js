@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { allExpensesSlice } from "./allExpenses/allExpenses-slice";
 import { currentExpenseSlice } from "./currentExpense/currentExpense-slice";
 import { currentExpenseNameSlice } from "./currentExpenseName/currentExpenseName-slice";
-import { incomeSlice } from "./income/currentExpenseName-slice";
+import { incomeSlice } from "./income/income-slice";
 
 const store = configureStore({
   reducer: {

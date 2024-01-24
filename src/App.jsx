@@ -7,7 +7,10 @@ import {
 } from "./store/currentExpense/currentExpense-slice";
 import { updateCurrentExpenseNameAction } from "./store/currentExpenseName/currentExpenseName-slice";
 import { addAllExpensesAction } from "./store/allExpenses/allExpenses-slice";
-import { setIncomeAction } from "./store/income/currentExpenseName-slice";
+import {
+  setIncomeAction,
+  setIncomeTotalAction,
+} from "./store/income/income-slice";
 
 import {
   Grid,
@@ -21,18 +24,21 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { fetchPost, addItem, deleteItem } from "./database/database";
+import {
+  fetchPost,
+  addItem,
+  deleteItem,
+  getAllIncomes,
+} from "./database/database";
 
 import InputExpense from "./containers/InputExpense/InputExpense";
 import ExpensesTotal from "./containers/ExpensesTotal/ExpensesTotal";
-import CashIncome from "./components/CashIncome";
+import CashIncome from "./containers/CashIncome/CashIncome";
 import ExpenseTable from "./containers/ExpenseTable/ExpenseTable";
 import ToogleColorMode from "./components/ToogleColorMode";
 
 function App() {
   const dispatch = useDispatch();
-
-  const income = useSelector((store) => store.INCOME.income);
 
   const allExpenses = useSelector((store) => store.ALLEXPENSES.allExpenses);
 
@@ -44,9 +50,14 @@ function App() {
     (store) => store.CURRENTEXPENSE.currentExpense
   );
 
+  const AllIncomes = useSelector((store) => store.INCOME.income);
+
   React.useEffect(() => {
     getData("fixedExpenses");
+    getIncome();
   }, []);
+
+  setIncomeTotal();
 
   async function getData(currentExpenseName) {
     const allData = await fetchPost();
@@ -64,8 +75,22 @@ function App() {
     setTab(currentExpenseName, currentData);
   }
 
-  function updateIncome(value) {
-    dispatch(setIncomeAction(value));
+  async function getIncome() {
+    const allIncome = await getAllIncomes();
+
+    dispatch(setIncomeAction(allIncome));
+  }
+
+  function setIncomeTotal() {
+    let incomeSum = 0;
+
+    if (AllIncomes) {
+      AllIncomes[0].map((income) => {
+        incomeSum += income.amount;
+      });
+    }
+
+    dispatch(setIncomeTotalAction(incomeSum));
   }
 
   function addExpense(item) {
@@ -100,11 +125,11 @@ function App() {
           fontWeight="bold"
         >
           <GridItem padding={3} area={"header"}>
-            <ExpensesTotal income={income} />
+            <ExpensesTotal />
           </GridItem>
           <GridItem padding={5} area={"input"}>
             <ToogleColorMode />
-            <CashIncome updateIncome={updateIncome} />
+            <CashIncome />
           </GridItem>
           <GridItem pl="2" area={"main"}>
             <VStack>
