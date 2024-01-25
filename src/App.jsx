@@ -55,6 +55,10 @@ function App() {
     getIncome();
   }, []);
 
+  React.useEffect(() => {
+    setIncomeTotal();
+  }, [AllIncomes]);
+
   async function getData(currentExpenseName) {
     const allData = await fetchPost();
 
@@ -75,7 +79,6 @@ function App() {
     const allIncome = await getAllIncomes();
 
     dispatch(setIncomeAction(allIncome));
-    setIncomeTotal();
   }
 
   function setIncomeTotal() {
