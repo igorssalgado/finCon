@@ -10,6 +10,7 @@ import { addAllExpensesAction } from "./store/allExpenses/allExpenses-slice";
 import {
   setIncomeAction,
   setIncomeTotalAction,
+  addInputAction,
 } from "./store/income/income-slice";
 
 import {
@@ -85,7 +86,7 @@ function App() {
     let incomeSum = 0;
 
     if (AllIncomes) {
-      AllIncomes[0].map((income) => {
+      AllIncomes.map((income) => {
         incomeSum += income.amount;
       });
     }
