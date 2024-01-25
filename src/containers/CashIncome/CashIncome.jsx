@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { FormatCurrency } from "../../utils/FormatCurrency";
 

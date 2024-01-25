@@ -5,7 +5,6 @@ import {
   StatHelpText,
   StatGroup,
   HStack,
-  Text,
 } from "@chakra-ui/react";
 import React from "react";
 import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";

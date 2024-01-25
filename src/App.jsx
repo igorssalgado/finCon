@@ -15,12 +15,10 @@ import {
 import {
   Grid,
   GridItem,
-  Button,
   Tabs,
   TabList,
   Tab,
   TabPanels,
-  TabPanel,
   VStack,
 } from "@chakra-ui/react";
 
@@ -57,8 +55,6 @@ function App() {
     getIncome();
   }, []);
 
-  setIncomeTotal();
-
   async function getData(currentExpenseName) {
     const allData = await fetchPost();
 
@@ -79,6 +75,7 @@ function App() {
     const allIncome = await getAllIncomes();
 
     dispatch(setIncomeAction(allIncome));
+    setIncomeTotal();
   }
 
   function setIncomeTotal() {
