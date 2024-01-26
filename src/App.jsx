@@ -10,7 +10,6 @@ import { addAllExpensesAction } from "./store/allExpenses/allExpenses-slice";
 import {
   setIncomeAction,
   setIncomeTotalAction,
-  addInputAction,
 } from "./store/income/income-slice";
 
 import {
@@ -30,10 +29,10 @@ import {
   getAllIncomes,
 } from "./database/database";
 
-import InputExpense from "./containers/InputExpense/InputExpense";
-import ExpensesTotal from "./containers/ExpensesTotal/ExpensesTotal";
-import CashIncome from "./containers/CashIncome/CashIncome";
-import ExpenseTable from "./containers/ExpenseTable/ExpenseTable";
+import InputExpense from "./containers/Expenses/InputExpense/InputExpense";
+import ExpensesTotal from "./containers/Expenses/ExpensesTotal/ExpensesTotal";
+import CashIncome from "./containers/Income/CashIncome/CashIncome";
+import ExpenseTable from "./containers/Expenses/ExpenseTable/ExpenseTable";
 import ToogleColorMode from "./components/ToogleColorMode";
 
 function App() {

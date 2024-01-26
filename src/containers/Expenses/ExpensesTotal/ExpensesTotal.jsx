@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
 
-import { FormatCurrency } from "../../utils/FormatCurrency";
+import { FormatCurrency } from "../../../utils/FormatCurrency";
 import { useSelector } from "react-redux";
 
 const ExpensesTotal = (props) => {

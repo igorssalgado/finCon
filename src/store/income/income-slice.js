@@ -16,8 +16,15 @@ export const incomeSlice = createSlice({
     addInputAction: (currentSlice, action) => {
       currentSlice.income = action.payload;
     },
+    deleteInputAction: (currentSlice, action) => {
+      currentSlice.income = action.payload;
+    },
   },
 });
 
-export const { setIncomeAction, setIncomeTotalAction, addInputAction } =
-  incomeSlice.actions;
+export const {
+  setIncomeAction,
+  setIncomeTotalAction,
+  addInputAction,
+  deleteInputAction,
+} = incomeSlice.actions;

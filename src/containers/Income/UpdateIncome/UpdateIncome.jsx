@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { Field, Form, Formik } from "formik";
+import IncomeTable from "../IncomeTable/IncomeTable";
 
 const UpdateIncome = (props) => {
   //   <Button
@@ -110,6 +111,7 @@ const UpdateIncome = (props) => {
                     </Form>
                   )}
                 </Formik>
+                <IncomeTable deleteIncome={props.deleteIncome} />
               </PopoverBody>
             </PopoverContent>
           </Portal>
