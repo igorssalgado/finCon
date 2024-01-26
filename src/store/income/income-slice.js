@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const incomeSlice = createSlice({
   name: "incomeSlice",
   initialState: {
-    income: "",
-    incomeTotal: "",
+    income: undefined,
+    incomeTotal: undefined,
   },
   reducers: {
     setIncomeAction: (currentSlice, action) => {
@@ -13,7 +13,11 @@ export const incomeSlice = createSlice({
     setIncomeTotalAction: (currentSlice, action) => {
       currentSlice.incomeTotal = action.payload;
     },
+    addInputAction: (currentSlice, action) => {
+      currentSlice.income = action.payload;
+    },
   },
 });
 
-export const { setIncomeAction, setIncomeTotalAction } = incomeSlice.actions;
+export const { setIncomeAction, setIncomeTotalAction, addInputAction } =
+  incomeSlice.actions;

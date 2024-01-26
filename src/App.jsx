@@ -10,6 +10,7 @@ import { addAllExpensesAction } from "./store/allExpenses/allExpenses-slice";
 import {
   setIncomeAction,
   setIncomeTotalAction,
+  addInputAction,
 } from "./store/income/income-slice";
 
 import {
@@ -55,6 +56,10 @@ function App() {
     getIncome();
   }, []);
 
+  React.useEffect(() => {
+    setIncomeTotal();
+  }, [AllIncomes]);
+
   async function getData(currentExpenseName) {
     const allData = await fetchPost();
 
@@ -75,14 +80,13 @@ function App() {
     const allIncome = await getAllIncomes();
 
     dispatch(setIncomeAction(allIncome));
-    setIncomeTotal();
   }
 
   function setIncomeTotal() {
     let incomeSum = 0;
 
     if (AllIncomes) {
-      AllIncomes[0].map((income) => {
+      AllIncomes.map((income) => {
         incomeSum += income.amount;
       });
     }

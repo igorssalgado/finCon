@@ -7,6 +7,18 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 
+export async function addIncomeDB(item, collectionName) {
+  try {
+    const docRef = await addDoc(collection(db, collectionName), {
+      incomeName: item.incomeName,
+      amount: item.amount,
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
 export async function addItem(item, collectionName) {
   try {
     const docRef = await addDoc(collection(db, collectionName), {
@@ -78,7 +90,7 @@ export async function getAllIncomes() {
         data = { ...data, id: doc.id };
         return data;
       });
-      data.push(newData);
+      data = newData;
     })
     .catch((e) => console.log("entrou no erro " + e));
 
